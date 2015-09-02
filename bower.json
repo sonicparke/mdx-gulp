@@ -1,0 +1,40 @@
+{
+  "name": "DoctorFinder",
+  "version": "0.1.0",
+  "description": "Doctor Finder app for mdx angular code test",
+  "authors": [
+    "Brad McAlister"
+  ],
+  "license": "MIT",
+  "homepage": "http://locahost:3000",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.3.x",
+    "angular-ui-router": "~0.2.x",
+    "angular-ui-bootstrap-bower": "~0.12.x",
+    "font-awesome": "~4.2.x",
+    "bootstrap": "~3.3.1",
+    "webfont-opensans": "*",
+    "angular-animate": "~1.3.x",
+    "angular-sanitize": "~1.3.x",
+    "ngmap": "~1.3.1",
+    "lodash": "~3.3.1"
+  },
+  "devDependencies": {
+    "jasmine": "~2.2.1",
+    "angular-mocks": "~1.3.14"
+  },
+    "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    }
+  }
+}

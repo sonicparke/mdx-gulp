@@ -1,0 +1,28 @@
+<div ng-init="vm.InitPage()" ng-controller="DrFind as vm">
+    
+    <section class="container">
+        <div class="well">  	
+            <map center="29.457395, -98.554006" zoom="8">
+                <marker ng-repeat="s in vm.markers" position="{{s.pos}}" title="{{s.title}}"></marker>
+            </map>
+        </div>
+
+        <div>
+            <div class="well clearfix clickable" ng-repeat="doctor in vm.items" ng-click="vm.DocSelect(doctor)">
+                <div class="indexNumber">{{$index + 1}}</div>
+                <div class="col-md-1"><i class="fa fa-user fa-5x"></i></div>
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li>{{doctor.name}}</li>
+                        <li>{{doctor.locations[0].address.addr_line1}}</li>
+                        <li>{{doctor.locations[0].address.city}}, {{doctor.locations[0].address.state_code}} </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+</div>
+
+

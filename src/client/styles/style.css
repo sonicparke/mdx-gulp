@@ -1,0 +1,44 @@
+html {
+    background: #ffffff;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    background: transparent;
+    font-family: 'OpenSansRegular'
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.appbar {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #1778bd;
+}
+
+.title {
+    font-family: 'OpenSansLight';
+    font-size: 24px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.center {
+    text-align: center;
+}
+
+.scrollable {
+    height: 200px;
+    overflow: scroll;
+}
+
+.indexNumber {
+    float: left;
+    font-size: 3.5em;
+    color: #999;
+}
