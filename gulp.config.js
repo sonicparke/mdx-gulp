@@ -3,7 +3,7 @@ module.exports = function() {
     var clientApp = client + 'app/';
     var report = './report/';
     var root = './';
-    var server = './src/server/';
+    var server = './server.js';
     var temp = './.tmp/';
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({devDependencies: true})['js'];
@@ -91,7 +91,7 @@ module.exports = function() {
          * Node Settings
          */
         defaultPort: 7203,
-        nodeServer: './src/server/app.js'
+        nodeServer: server
 
     };
 

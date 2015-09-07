@@ -10,24 +10,30 @@
         'app.layout',
         'app.drfind',
         'ngMap'
-    ]).config(config);
+    ])
+    .config(config)
+    .run(run);
 
 
     config.$inject = ['$stateProvider', '$httpProvider', '$urlRouterProvider'];
     /* @ngInject */
     function config($stateProvider, $httpProvider, $urlRouterProvider) {
 
+        $stateProvider
+            .state('drfind', {
+                url: '/drfind',
+                templateUrl: 'app/drfind/drfind.html',
+                controller: 'DrFind',
+                controllerAs: 'df'
+            });
 
-        // $stateProvider
-        //     .state('drfind', {
-        //         url: '/drfind',
-        //         templateUrl: 'app/drfind/drfind.html',
-        //         controller: 'DrFind',
-        //         controllerAs: 'vm'
-        //     });
-
-
-        // $urlRouterProvider.otherwise('drfind');
+        $urlRouterProvider.otherwise('drfind');
+    }
+    
+    run.$inject = ['$state'];
+    /* @ngInject */
+    function run($state){
+        $state.go('drfind');
     }
 
 })();

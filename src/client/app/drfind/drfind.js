@@ -7,7 +7,7 @@
 
     DrFind.$inject = ['DataService'];
     /* @ngInject */
-    function DrFind (DataService) {
+    function DrFind(DataService) {
         var vm = this;
         vm.GetData = GetData;
         vm.DocSelect = DocSelect;
@@ -19,6 +19,7 @@
 
         // Initial Functions
         vm.InitPage = function() {
+            console.log('fired');
             vm.GetData(); // Get the json data on page load
         };
 

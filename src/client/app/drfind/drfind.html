@@ -1,14 +1,14 @@
-<div ng-init="vm.InitPage()" ng-controller="DrFind as vm">
+<div ng-init="df.InitPage()">
     
     <section class="container">
         <div class="well">  	
             <map center="29.457395, -98.554006" zoom="8">
-                <marker ng-repeat="s in vm.markers" position="{{s.pos}}" title="{{s.title}}"></marker>
+                <marker ng-repeat="s in df.markers" position="{{s.pos}}" title="{{s.title}}"></marker>
             </map>
         </div>
 
         <div>
-            <div class="well clearfix clickable" ng-repeat="doctor in vm.items" ng-click="vm.DocSelect(doctor)">
+            <div class="well clearfix clickable" ng-repeat="doctor in df.items" ng-click="df.DocSelect(doctor)">
                 <div class="indexNumber">{{$index + 1}}</div>
                 <div class="col-md-1"><i class="fa fa-user fa-5x"></i></div>
                 <div class="col-md-6">
