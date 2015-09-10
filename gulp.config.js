@@ -20,23 +20,22 @@ module.exports = function() {
         ],
         build: './build/',
         client: client,
-        css: [
-            client + 'styles/*.css',
-            clientApp + '**/*.css'
-        ],
+        css: temp + 'styles.css',
         cssLess: temp + 'styles.css',
         fonts: [
             './bower_components/font-awesome/fonts/**/*.*',
             './bower_components/webfont-opensans/fonts/**/*.*'
         ],
         html: '**/*.html',
-        htmltemplates: clientApp + '**/*.html',
+        htmltemplates: client + 'app/**/*.html',
         images: client + 'images/**/*.*',
         index: client + 'index.html',
         js: [
-            clientApp + '**/*.module.js',
-            clientApp + '**/*.js',
-            '!' + clientApp + '**/*.spec.js'
+            client + 'app/**/*.module.js',
+            client + 'app/**/*.js',
+            '!' + client + 'app/**/*.spec.js'
+            // ,
+            // '!' + client + 'app/theming/**/*.js' // TODO: figure out excluding from default build
         ],
         less: client + 'styles/styles.less',
         report: report,

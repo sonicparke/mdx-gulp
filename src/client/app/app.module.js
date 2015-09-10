@@ -29,10 +29,10 @@
 
         $urlRouterProvider.otherwise('drfind');
     }
-    
+
     run.$inject = ['$state'];
     /* @ngInject */
-    function run($state){
+    function run($state) {
         $state.go('drfind');
     }
 

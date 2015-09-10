@@ -19,14 +19,12 @@
 
         // Initial Functions
         vm.InitPage = function() {
-            console.log('fired');
             vm.GetData(); // Get the json data on page load
         };
 
         function GetData() {
             DataService.GetData().success(function(res) {
                 vm.items = res.professionals; // Make the json object available to the DOM
-                console.log('vm.items: ', vm.items);
             });
         }
 

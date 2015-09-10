@@ -139,8 +139,12 @@
     gulp.task('templatecache', ['clean-code'], function() {
         //TODO There is an error in here when running serve-build and editing an html file.
         log('Creating AngularJS $templateCache');
+        var themingFiles = config.client + 'app/theming/**/*.html';
+        config.htmltemplates = [config.htmltemplates, themingFiles];
+        log(config.htmltemplates);
         return gulp
             .src(config.htmltemplates)
+            // .src(themingFiles)
             .pipe($.plumber()) // Catch any errors
             .pipe($.minifyHtml({empty:true}))// minify the html and leave any empty elements intact
             .pipe($.angularTemplatecache(
@@ -160,10 +164,26 @@
         var options = config.getWiredepDefaultOptions();
         var wiredep = require('wiredep').stream;
 
+        //////////////
+        // Testing client theme stuff
+        //////////////
+
+        var theming = false;
+        var themingFiles = config.client + 'app/theming/**/*.js';
+        if (args && args.client) {
+            var client = args.client;
+            if (client === 'hcsc') {
+                log('Client in true -> ' + client);
+                theming = true;
+            }
+        }
+
         return gulp
             .src(config.index)
             .pipe(wiredep(options))
-            .pipe($.inject(gulp.src(config.js)))
+            // TODO: It's still grabbing the theme files here I think.
+            .pipe($.inject(gulp.src(config.js, {read: true}), {starttag: '<!-- inject:app:{{ext}} -->'}))
+            .pipe($.if(theming, $.inject(gulp.src(themingFiles), {starttag: '<!-- inject:client:{{ext}} -->'})))
             .pipe(gulp.dest(config.client));
     });
 
@@ -175,7 +195,7 @@
     //
     ////////////////////
     //TODO put styles task back in once I'm using pre-processing
-    gulp.task('inject', ['wiredep', 'templatecache'], function() {
+    gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
         log('Wire up the css into the html, and call wiredep');
 
         return gulp
@@ -194,6 +214,9 @@
     ////////////////////
     gulp.task('optimize', ['inject'], function() {
         log('Optimizing the javascript, css, html');
+
+        // var client = args.client;
+        // log('Client -> ' + client);
 
         var assets = $.useref.assets({searchPath: './'});
         var templateCache = config.temp + config.templateCache.file;
@@ -239,29 +262,19 @@
 
     ////////////////////
     //
-    // Deploy to Web Server on Windows
-    // --type=dev
-    // --type=test
-    // --type=prod
+    // Complie LESS --> CSS
+    // Clean the styles folder first
     //
     ////////////////////
-    gulp.task('deploy', function() {
-        var msg = 'Deploying ';
-        var type = args.type;
-        var deployPath = config.deploy + type;
-        var options = {};
-        options.type = type;
-        msg += ' to ' + config.deploy + type;
-        type = type.toLowerCase();
-        if (type === 'prod') {
-            deployPath = config.deploy;
+    gulp.task('styles', ['clean-styles'], function() {
+        log('Compiling Less --> CSS');
 
-        }
-        log(msg);
         return gulp
-            .src(config.build + '/**/*')
-            .pipe($.print())
-            .pipe(gulp.dest(deployPath));
+            .src(config.less)
+            .pipe($.plumber()) // Catch any errors
+            .pipe($.less())
+            .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+            .pipe(gulp.dest(config.temp));
     });
 
     ////////////////////
@@ -426,6 +439,7 @@
             // watch the LESS files and re-compile if changed
             gulp.watch([config.less], ['styles'])
                 .on('change', function(event) {
+                    console.log('event :', event);
                     changeEvent(event);
                 });
         } else {
