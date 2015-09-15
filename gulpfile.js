@@ -36,10 +36,14 @@
     // For mdx code test only
     //
     ////////////////////
-    gulp.task('searchdata', function() {
+    gulp.task('jsonData', function() {
         log('Copying data/search.json.');
+        var jsonData = [
+            './src/client/app/data/search.json',
+            './src/client/app/data/features.json'
+        ];
         return gulp
-            .src('./src/client/app/data/search.json')
+            .src(jsonData)
             .pipe(gulp.dest(config.build + 'data'));
     });
 
@@ -128,7 +132,22 @@
     //
     ////////////////////
     gulp.task('less-watcher', function(done) {
-        gulp.watch([config.less], ['styles']);
+        var lessFiles = [config.less,  'app/**/*.less', 'theming/<%= client %>/**/*.less'];
+        return gulp.src(lessFiles)
+            .pipe($.lessWatcher(lessFiles))
+            .pipe($.print())
+            .pipe($.plumber()) // Catch any errors
+            .pipe($.template({client: config.buildClient}))
+            .pipe($.less(config.less))
+            // .pipe($.less({
+            //     paths: config.less,
+            //     plugins: [require('less-plugin-glob')]
+            // }))
+            .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+            .pipe(gulp.dest(config.temp, {flatten: true}));
+        // gulp
+        //     .watch(lessFiles, ['styles'])
+        //     .watch('theming/<%= client %>/**/*.less', ['styles']);
     });
 
     ////////////////////
@@ -139,12 +158,9 @@
     gulp.task('templatecache', ['clean-code'], function() {
         //TODO There is an error in here when running serve-build and editing an html file.
         log('Creating AngularJS $templateCache');
-        var themingFiles = config.client + 'app/theming/**/*.html';
-        config.htmltemplates = [config.htmltemplates, themingFiles];
-        log(config.htmltemplates);
+
         return gulp
             .src(config.htmltemplates)
-            // .src(themingFiles)
             .pipe($.plumber()) // Catch any errors
             .pipe($.minifyHtml({empty:true}))// minify the html and leave any empty elements intact
             .pipe($.angularTemplatecache(
@@ -164,26 +180,10 @@
         var options = config.getWiredepDefaultOptions();
         var wiredep = require('wiredep').stream;
 
-        //////////////
-        // Testing client theme stuff
-        //////////////
-
-        var theming = false;
-        var themingFiles = config.client + 'app/theming/**/*.js';
-        if (args && args.client) {
-            var client = args.client;
-            if (client === 'hcsc') {
-                log('Client in true -> ' + client);
-                theming = true;
-            }
-        }
-
         return gulp
             .src(config.index)
             .pipe(wiredep(options))
-            // TODO: It's still grabbing the theme files here I think.
-            .pipe($.inject(gulp.src(config.js, {read: true}), {starttag: '<!-- inject:app:{{ext}} -->'}))
-            .pipe($.if(theming, $.inject(gulp.src(themingFiles), {starttag: '<!-- inject:client:{{ext}} -->'})))
+            .pipe($.inject(gulp.src(config.js)))
             .pipe(gulp.dest(config.client));
     });
 
@@ -200,7 +200,7 @@
 
         return gulp
             .src(config.index)
-            .pipe($.inject(gulp.src(config.css)))
+            .pipe($.inject(gulp.src(config.css).pipe($.print())))
             .pipe(gulp.dest(config.client));
     });
 
@@ -255,7 +255,7 @@
     // Build for produciton
     //
     ////////////////////
-    gulp.task('build', ['optimize', 'fonts', 'images', 'searchdata'], function() {
+    gulp.task('build', ['optimize', 'fonts', 'images', 'jsonData'], function() {
         log('Build all the things!!');
     });
 
@@ -271,10 +271,15 @@
 
         return gulp
             .src(config.less)
+            .pipe($.print())
             .pipe($.plumber()) // Catch any errors
-            .pipe($.less())
+            .pipe($.template({client: config.buildClient}))
+            .pipe($.less({
+                paths: config.less,
+                plugins: [require('less-plugin-glob')]
+            }))
             .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-            .pipe(gulp.dest(config.temp));
+            .pipe(gulp.dest(config.temp, {flatten: true}));
     });
 
     ////////////////////

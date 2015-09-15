@@ -7,6 +7,13 @@ module.exports = function() {
     var temp = './.tmp/';
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({devDependencies: true})['js'];
+    var args = require('yargs').argv;
+    var buildClient = args.client;
+
+    if (!buildClient) {
+        buildClient = 'no_client';
+    }
+    console.log('buildClient :', buildClient);
 
     var config = {
 
@@ -19,25 +26,29 @@ module.exports = function() {
             './*js'
         ],
         build: './build/',
+        buildClient: buildClient,
         client: client,
-        css: temp + 'styles.css',
-        cssLess: temp + 'styles.css',
+        css: temp + '*.css',
         fonts: [
             './bower_components/font-awesome/fonts/**/*.*',
             './bower_components/webfont-opensans/fonts/**/*.*'
         ],
         html: '**/*.html',
-        htmltemplates: client + 'app/**/*.html',
+        htmltemplates: [
+            client + 'app/**/*.html',
+            client + 'theming/' + buildClient + '/**/*.html'
+        ],
         images: client + 'images/**/*.*',
         index: client + 'index.html',
         js: [
             client + 'app/**/*.module.js',
             client + 'app/**/*.js',
+            client + 'theming/' + buildClient + '/**/*.js',
             '!' + client + 'app/**/*.spec.js'
-            // ,
-            // '!' + client + 'app/theming/**/*.js' // TODO: figure out excluding from default build
         ],
-        less: client + 'styles/styles.less',
+        less: [
+             client + 'styles/app.less'
+        ],
         report: report,
         root: root,
         server: server,

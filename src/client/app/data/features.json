@@ -1,0 +1,32 @@
+{
+	"features": [
+		{
+			"suppress_drfind": false,
+			"15_2_app_version": true,
+			"15_2_filters": true,
+			"15_2_show_new_compare_box": false,
+			"15_2_show_new_header": false,
+			"15_2_show_new_profile_card": false,
+			"15_2_show_new_share_actions": false,
+			"15_2_show_new_sort": false,
+			"5_2_show_new_compare_box": false,
+			"admin_autosuggest_keywords": true,
+			"async_cost_tl": true,
+			"async_reference": true,
+			"auth": true,
+			"cost": true,
+			"costume_debug": true,
+			"daily_import": false,
+			"daily_review_update": true,
+			"descriptive_cost_status": true,
+			"geolocation": true,
+			"member_impersonate": true,
+			"msa_auth": true,
+			"prs": false,
+			"search_combined_providers": false,
+			"solr_debug": true,
+			"suppress_members": false,
+			"use_prss": true
+		}
+	]
+}

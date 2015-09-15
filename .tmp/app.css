@@ -1,10 +1,13 @@
+.drfind {
+  margin: auto;
+}
 html {
   background: #ffffff;
   background-size: cover;
 }
 body {
   background: transparent;
-  font-family: 'OpenSansLight';
+  font-family: 'Arial';
 }
 .clickable {
   cursor: pointer;
@@ -12,10 +15,10 @@ body {
 .appbar {
   width: 100%;
   margin-bottom: 20px;
-  background-color: #1778bd;
+  background-color: #888888;
 }
 .title {
-  font-family: 'OpenSansLight';
+  font-family: 'Arial';
   font-size: 24px;
   font-weight: normal;
   color: #fff;
@@ -31,4 +34,10 @@ body {
   float: left;
   font-size: 3.5em;
   color: #999;
+}
+.hello {
+  color: #888888;
+}
+.goodbye {
+  color: #fff000;
 }

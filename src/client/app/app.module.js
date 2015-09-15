@@ -9,6 +9,7 @@
         /* Feature areas */
         'app.layout',
         'app.drfind',
+        'app.home',
         'ngMap'
     ])
     .config(config)
@@ -20,6 +21,12 @@
     function config($stateProvider, $httpProvider, $urlRouterProvider) {
 
         $stateProvider
+            .state('home', {
+                url: '/',
+                templateUrl: 'app/home/home.html',
+                controller: 'Home',
+                controllerAs: 'hm'
+            })
             .state('drfind', {
                 url: '/drfind',
                 templateUrl: 'app/drfind/drfind.html',
@@ -27,13 +34,13 @@
                 controllerAs: 'df'
             });
 
-        $urlRouterProvider.otherwise('drfind');
+        $urlRouterProvider.otherwise('home');
     }
 
     run.$inject = ['$state'];
     /* @ngInject */
     function run($state) {
-        $state.go('drfind');
+        $state.go('home');
     }
 
 })();

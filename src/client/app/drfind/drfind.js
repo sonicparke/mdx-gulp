@@ -2,7 +2,7 @@
     'use strict';
     /*global _:false */
 
-    angular.module('app.core')
+    angular.module('app.drfind')
         .controller('DrFind', DrFind);
 
     DrFind.$inject = ['DataService'];

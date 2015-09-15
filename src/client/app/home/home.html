@@ -1,0 +1,9 @@
+<div>
+	<h2>{{hm.homeText}}</h2>
+	<div ng-if="!hm.features.suppress_drfind">
+		<a ui-sref="drfind">Doctor Finder</a>
+	</div>
+	<div ng-if="hm.features.suppress_drfind">
+		Doctor Finder is not available.
+	</div>
+</div>
