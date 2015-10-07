@@ -132,22 +132,20 @@
     //
     ////////////////////
     gulp.task('less-watcher', function(done) {
-        var lessFiles = [config.less,  'app/**/*.less', 'theming/<%= client %>/**/*.less'];
-        return gulp.src(lessFiles)
-            .pipe($.lessWatcher(lessFiles))
-            .pipe($.print())
-            .pipe($.plumber()) // Catch any errors
-            .pipe($.template({client: config.buildClient}))
-            .pipe($.less(config.less))
-            // .pipe($.less({
-            //     paths: config.less,
-            //     plugins: [require('less-plugin-glob')]
-            // }))
-            .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-            .pipe(gulp.dest(config.temp, {flatten: true}));
-        // gulp
-        //     .watch(lessFiles, ['styles'])
-        //     .watch('theming/<%= client %>/**/*.less', ['styles']);
+        var lessFiles = [
+            config.less,
+            'app/**/*.less',
+            'theming/' + config.buildClient + '/**/*.less'
+        ];
+        // return gulp.src(lessFiles)
+        //     .pipe($.lessWatcher())
+        //     // .pipe($.plumber()) // Catch any errors
+        //     .pipe($.template({client: config.buildClient}))
+        //     .pipe($.less(lessFiles))
+        //     .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+        //     .pipe(gulp.dest(config.temp, {flatten: true}));
+        gulp
+            .watch(lessFiles, ['styles']);
     });
 
     ////////////////////

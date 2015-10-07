@@ -1,6 +1,5 @@
 .drfind {
   margin: auto;
-  padding: none;
 }
 html {
   background: #ffffff;
@@ -16,7 +15,7 @@ body {
 .appbar {
   width: 100%;
   margin-bottom: 20px;
-  background-color: #1778bd;
+  background-color: #888888;
 }
 .title {
   font-family: 'Arial';
@@ -36,6 +35,15 @@ body {
   font-size: 3.5em;
   color: #999;
 }
+.hello {
+  color: #888888;
+}
+.goodbye {
+  color: #ff0000;
+}
+.crap {
+  color: #ff0000;
+}
 .test {
-  color: mebadToo;
+  color: mebad;
 }
